@@ -119,15 +119,14 @@ import quickfix.fix44.UserRequest;
 import quickfix.fix44.UserResponse;
 
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 
 public class MessageCracker {
 
-	private final HashMap<String, BiConsumer<quickfix.fix44.Message, SessionID>> methodRegistry;
+	private final HashMap<String, MessageConsumer> methodRegistry;
 
 	public MessageCracker() {
 		methodRegistry = new HashMap<>();
-		methodRegistry.put(MsgType.EXECUTION_REPORT, this::handleExecutionReport);
+		methodRegistry.put(MsgType.EXECUTION_REPORT, (message, sessionID) -> onMessage((ExecutionReport) message, sessionID));
 	}
 
 	/**
@@ -1350,11 +1349,8 @@ public class MessageCracker {
 		methodRegistry.get(type).accept(message, sessionID);
 	}
 
-	private void handleExecutionReport(quickfix.fix44.Message msg, SessionID session) {
-		try {
-			this.onMessage((ExecutionReport) msg, session);
-		} catch (FieldNotFound | UnsupportedMessageType | IncorrectTagValue e) {
-			throw new RuntimeException(e);
-		}
+	@FunctionalInterface
+	private interface MessageConsumer {
+		void accept(quickfix.fix44.Message message, SessionID sessionID) throws UnsupportedMessageType, IncorrectTagValue, FieldNotFound;
 	}
 }
