@@ -123,6 +123,7 @@ import java.util.HashMap;
 public class MessageCracker {
 
 	private final HashMap<String, MessageConsumer> methodRegistry;
+	private final MessageConsumer defaultFunction = this::onMessage;
 
 	public MessageCracker() {
 		methodRegistry = new HashMap<>();
@@ -1346,7 +1347,7 @@ public class MessageCracker {
 			throws UnsupportedMessageType, FieldNotFound, IncorrectTagValue {
 
 		String type = message.getHeader().getString(MsgType.FIELD);
-		methodRegistry.get(type).accept(message, sessionID);
+		methodRegistry.getOrDefault(type, defaultFunction).accept(message, sessionID);
 	}
 
 	@FunctionalInterface
