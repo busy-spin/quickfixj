@@ -31,7 +31,7 @@ import quickfix.fix44.ExecutionReport;
 @Measurement( iterations = 5, time = 3)
 public class MessageCrackerBenchmark {
 
-    private SampleFixApplication sampleFixApplication = new SampleFixApplication();
+    private SampleFixApplication sampleFixApplication1 = new SampleFixApplication();
     private SampleFixApplication2 sampleFixApplication2 = new SampleFixApplication2();
     private SessionID sessionID = null;
     private quickfix.fix44.ExecutionReport executionReport = null;
@@ -62,7 +62,7 @@ public class MessageCrackerBenchmark {
 
     @Benchmark
     public void benchmarkCrackingGenerated() throws Exception {
-        sampleFixApplication.fromApp(executionReport, sessionID);
+        sampleFixApplication1.fromApp(executionReport, sessionID);
     }
 
     @Benchmark
