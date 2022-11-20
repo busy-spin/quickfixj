@@ -7,7 +7,6 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
@@ -62,12 +61,12 @@ public class MessageCrackerBenchmark {
     }
 
     @Benchmark
-    public void benchmarkCrackingExecutionReportOld() throws Exception {
+    public void benchmarkCrackingGenerated() throws Exception {
         sampleFixApplication.fromApp(executionReport, sessionID);
     }
 
     @Benchmark
-    public void benchmarkCrackingExecutionReportNew() throws Exception {
+    public void benchmarkCrackingWithHashMap() throws Exception {
         sampleFixApplication2.fromApp(executionReport, sessionID);
     }
 
