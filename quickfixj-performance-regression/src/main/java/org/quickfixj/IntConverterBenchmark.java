@@ -1,7 +1,5 @@
 package org.quickfixj;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -15,13 +13,13 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @Fork( 1 )
 @State( Scope.Benchmark )
-@Warmup( iterations = 3, time = 3, timeUnit = TimeUnit.SECONDS )
-@Measurement( iterations = 5, time = 3, timeUnit = TimeUnit.SECONDS )
-public class IntConverterBenchmark3 {
+@Warmup( iterations = 3, time = 3)
+@Measurement( iterations = 5, time = 3)
+public class IntConverterBenchmark {
 
     public static void main( String[] args ) throws Exception {
         Options opt = new OptionsBuilder().shouldDoGC( true )
-                .include( IntConverterBenchmark3.class.getSimpleName() )
+                .include( IntConverterBenchmark.class.getSimpleName() )
                 .build();
         new Runner( opt ).run();
     }
